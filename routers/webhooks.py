@@ -1,5 +1,5 @@
 import os
-import re
+import requests
 from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException, Header, Request
@@ -38,7 +38,21 @@ async def callback(request: Request, x_line_signature: str = Header(None)):
 
 @handler.add(MessageEvent, message=TextMessage)
 def message_text(event):
-    reply_event = TextSendMessage(text=event.message.text)
+    text = event.message.text
+    if text == 'jobs':
+        r = requests.get(
+            url='https://api.github.com/repos/octocat/hello-world/actions/workflows',
+            headers={
+                'Accept': 'application/vnd.github.v3+json',
+            },
+            params={'per_page': 3})
+    # elif ooo:
+    #     https://api.github.com/repos/octocat/hello-world/actions/workflows/42
+    # elif disable xxx:
+    #       https://api.github.com/repos/octocat/hello-world/actions/workflows/42/disable
+
+
+    reply_event = TextSendMessage(text=str(r.json()))
     line_bot_api.reply_message(
         event.reply_token,
         reply_event
