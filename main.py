@@ -11,13 +11,14 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
-from routers import webhooks
+from routers import webhooks, users
 
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
 
 app.include_router(webhooks.router)
+app.include_router(users.router)
 
 
 @app.get("/")

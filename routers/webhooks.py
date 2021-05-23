@@ -5,9 +5,7 @@ from typing import List, Optional
 from fastapi import APIRouter, HTTPException, Header, Request
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import TextMessage, MessageEvent, TextSendMessage, StickerMessage, \
-    StickerSendMessage, FlexSendMessage
-from lotify.client import Client
+from linebot.models import TextMessage, MessageEvent, TextSendMessage
 from pydantic import BaseModel
 
 line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
@@ -35,13 +33,12 @@ async def callback(request: Request, x_line_signature: str = Header(None)):
     return 'OK'
 
 
-
 @handler.add(MessageEvent, message=TextMessage)
 def message_text(event):
     text = event.message.text
     if text == 'jobs':
         r = requests.get(
-            url='https://api.github.com/repos/octocat/hello-world/actions/workflows',
+            url='https://api.github.com/repos/octocat/hello-world/actions/workflows/runs',
             headers={
                 'Accept': 'application/vnd.github.v3+json',
             },
@@ -50,7 +47,6 @@ def message_text(event):
     #     https://api.github.com/repos/octocat/hello-world/actions/workflows/42
     # elif disable xxx:
     #       https://api.github.com/repos/octocat/hello-world/actions/workflows/42/disable
-
 
     reply_event = TextSendMessage(text=str(r.json()))
     line_bot_api.reply_message(

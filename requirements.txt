@@ -11,3 +11,5 @@ pytest-cov
 mock
 lotify
 requests
+psycopg2-binary
+sqlalchemy
