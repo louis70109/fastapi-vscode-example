@@ -20,7 +20,7 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
 
 @router.get("/{user_id}", response_model=schemas.User)
-def read_users(user_id: str, db: Session = Depends(get_db)):
+def read_specific_user(user_id: str, db: Session = Depends(get_db)):
     user = crud.get_user(db, user_id=user_id)
     return user
 
@@ -34,16 +34,16 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/{user_id}/projects/", response_model=schemas.Project)
-def read_users(user_id: str, project: schemas.ProjectCreate, db: Session = Depends(get_db)):
+def create_user_projects(user_id: str, project: schemas.ProjectCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_uid(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=400, detail="User not registered")
     project = crud.create_user_project(db, project=project, user_id=user_id)
-    return project
+    return projectgd
 
 
 @router.get("/{user_id}/projects/", response_model=List[schemas.Project])
-def read_users(user_id: str, db: Session = Depends(get_db)):
+def read_user_projects(user_id: str, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_uid(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=400, detail="User not registered")
