@@ -39,7 +39,7 @@ def create_user_projects(user_id: str, project: schemas.ProjectCreate, db: Sessi
     if not db_user:
         raise HTTPException(status_code=400, detail="User not registered")
     project = crud.create_user_project(db, project=project, user_id=user_id)
-    return projectgd
+    return project
 
 
 @router.get("/{user_id}/projects/", response_model=List[schemas.Project])
