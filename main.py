@@ -7,12 +7,13 @@ if os.getenv('API_ENV') != 'production':
 
 import uvicorn
 import sql_app.database as db
-
+import logging
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-
 from routers import webhooks, users
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
