@@ -8,7 +8,9 @@ RUN apk update --no-cache \
 && apk del .build-deps
 RUN apk add postgresql-libs libpq --no-cache
 
-RUN pip install -r requirements.txt
+COPY requirements.txt /tmp/pip-tmp/
+RUN pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+   && rm -rf /tmp/pip-tmp
 
 WORKDIR /app
 COPY . /app

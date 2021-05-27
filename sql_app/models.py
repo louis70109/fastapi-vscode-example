@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Sequence
+from sqlalchemy import Column, ForeignKey, Integer, String, Sequence
 from sqlalchemy.orm import relationship
 
 id_seq = Sequence('id_seq')

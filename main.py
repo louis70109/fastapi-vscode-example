@@ -6,6 +6,7 @@ if os.getenv('API_ENV') != 'production':
     load_dotenv()
 
 import uvicorn
+import sql_app.database as db
 
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
@@ -16,6 +17,15 @@ from routers import webhooks, users
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
+
+@app.on_event("startup")
+async def startup() -> None:
+    await db.database.connect()
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    await db.database.disconnect()
 
 app.include_router(webhooks.router)
 app.include_router(users.router)
