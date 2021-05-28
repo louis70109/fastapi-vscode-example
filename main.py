@@ -1,4 +1,5 @@
 import os
+from sqlalchemy.engine import create_engine
 
 if os.getenv('API_ENV') != 'production':
     from dotenv import load_dotenv
@@ -16,17 +17,19 @@ from routers import webhooks, users
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
-
 templates = Jinja2Templates(directory="templates")
 
 @app.on_event("startup")
 async def startup() -> None:
-    await db.database.connect()
+    SQLALCHEMY_DATABASE_URL = os.getenv('DATABASE_URI')
+    engine = create_engine(SQLALCHEMY_DATABASE_URL)
+    db.Base.metadata.create_all(bind=engine)
 
 
 @app.on_event("shutdown")
 async def shutdown():
-    await db.database.disconnect()
+    db.SessionLocal().close()
+    
 
 app.include_router(webhooks.router)
 app.include_router(users.router)
