@@ -1,6 +1,6 @@
 # Example for develops FastAPI in CONTAINER with VSCode
 
-Chinese content please follow here -> [Blog URL](https://nijialin.com/2021/05/29/fastapi-dev-in-container-vscode/)
+Chinese content please follow here -> [如何在 VSCode 中以 Container 方式開發 FastAPI + PostgreSQL](https://nijialin.com/2021/05/29/fastapi-dev-in-container-vscode/)
 
 ## Prerequisite
 
