@@ -1,4 +1,6 @@
-# Example for FastAPI develops in CONTAINER with VSCode
+# Example for develops FastAPI in CONTAINER with VSCode
+
+Chinese content please follow here -> [Blog URL](https://nijialin.com/2021/05/29/fastapi-dev-in-container-vscode/)
 
 ## Prerequisite
 
